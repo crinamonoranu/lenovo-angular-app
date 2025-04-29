@@ -1,17 +1,30 @@
 <h1>Delicious recipes</h1>
 
 <h2>Recipes</h2>
+
+<div class="search-container">
+  <input
+    type="text"
+    placeholder="Search recipe"
+    [(ngModel)]="searchValue"
+    (ngModelChange)="filteredValues()"
+  />
+
+  <button class="add-button"(click) = "redirectToAddRecipe()">Add recipe</button>
+</div>
+
+{{ searchValue }}
+
 <div class="card-container">
-<!-- <app-recipe-card [recipe] ="recipes[0]"></app-recipe-card>
+  <!-- <app-recipe-card [recipe] ="recipes[0]"></app-recipe-card>
 <app-recipe-card [recipe] ="recipes[1]"></app-recipe-card>
 <app-recipe-card [recipe] ="recipes[2]"></app-recipe-card> -->
 
-@for (recipe of dummyRecipes; track $index) {
-    <app-recipe-card [recipe] = "recipe"></app-recipe-card>
-} @empty {
-    <div>No items to display</div>
-}
+  @for (recipe of dbRecipes; track $index) {
+  <app-recipe-card [recipe]="recipe"></app-recipe-card>
+  } @empty {
+  <div>No items to display</div>
+  }
 </div>
 
 {{ errorMessage }}
-
