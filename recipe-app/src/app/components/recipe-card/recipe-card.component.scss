@@ -3,6 +3,8 @@
     width: 390px;
     height: 450px;
     display: flex;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;

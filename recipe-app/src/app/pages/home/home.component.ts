@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Recipe } from '../../interfaces/recipe.interfaces';
 import { RecipesService } from '../../services/recipes.service';
 import { RecipeCardComponent } from '../../components/recipe-card/recipe-card.component';
@@ -17,13 +17,15 @@ export class HomeComponent {
   dummyRecipes!: Recipe[];
   filteredRecipes!: Recipe[];
   dbRecipes!: any[];
-  errorMessage='';
+  errorMessage:any ='';
   searchValue='';
+  dbSubscription:any= 'any';
+  constructor(private recipesService: RecipesService,private router: Router) {}
 
-  constructor(recipesService: RecipesService, readonly router: Router) {
-    this.recipes = recipesService.recipes;
+  ngOnInit(){
+    this.recipes = this.recipesService.recipes;
     try {
-      recipesService.getAllRecipes().subscribe({
+      this.recipesService.getAllRecipes().subscribe({
         next: (Response) => {
           console.log(Response);
           //throw new Error('Something happend');
@@ -49,6 +51,20 @@ export class HomeComponent {
       }
     });
   
+    this.dbSubscription = db.subscribeQuery({recipes: {}}, (res) => {
+      if(res.data){
+        this.dbRecipes = res.data.recipes;
+      }
+      if(res.error){
+        this.errorMessage = res.error;
+      }
+    })
+  
+  }
+  
+  ngOnDestroy()
+  {
+    this.dbSubscription();
   }
 
   filteredValues() {
@@ -61,6 +77,5 @@ export class HomeComponent {
     this.router.navigateByUrl('add-recipe');
   }
 
-  
 
 }

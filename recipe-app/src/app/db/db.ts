@@ -1,7 +1,8 @@
 import { FormGroupName } from "@angular/forms";
 import { init, i, id, InstaQLEntity } from "@instantdb/core";
+import { environment } from '../../environments/environment';
 // ID for app: recipe app
-const APP_ID = "a1db3342-8db8-4ee4-a6d8-1c8907c5e13e";
+const APP_ID = environment.API_ID;
 
 // Optional: Declare your schema!
 const schema = i.schema({
